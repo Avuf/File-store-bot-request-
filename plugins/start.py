@@ -29,27 +29,27 @@ async def start_command(client: Client, message: Message):
     text = message.text
     if len(text)>7:
         if AUTH_CHANNEL:
-            missing_channels = [channel for channel in AUTH_CHANNEL if not await is_subscribed(message, channel)]
+            missing_channels = [channel for channel in AUTH_CHANNEL if not await is_req_exist(id, channel)]
 
             if missing_channels:
                 btns = []
                 for channel_id in missing_channels:
                     try:
                         invite_link = await client.create_chat_invite_link(chat_id=channel_id, creates_join_request=True)
-                    except types.exceptions.ChatAdminRequired:
-                        logger.error("Make sure Bot is admin in Forcesub channel")
+                    except Exception as e:
+                        print(f"Error creating invite link: {e}")
                         return
- 
+
                     btns.append([
-                        InlineKeyboardButton(f"🤖 Join Channel", url=invite_link.)
+                        InlineKeyboardButton(f"🤖 Join Channel", url=invite_link.link)
                     ])
                 try:
-                    buttons.append(
+                    btns.append(
                         [
-                           InlineKeyboardButton(
-                               text = 'Try Again',
-                               url = f"https://t.me/{client.username}?start={message.command[1]}"
-                           )
+                            InlineKeyboardButton(
+                                text='Try Again',
+                                url=f"https://t.me/{(await app.get_me()).username}?start={message.command[1]}"
+                            )
                         ]
                     )
                 except IndexError:
@@ -57,8 +57,8 @@ async def start_command(client: Client, message: Message):
                 await client.send_message(
                     chat_id=message.from_user.id,
                     text="**Please Join the Following Channels to use this Bot!**",
-                    reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btns),
-                    parse_mode=types.ParseMode.MARKDOWN
+                    reply_markup=InlineKeyboardMarkup(inline_keyboard=btns),
+                    parse_mode="markdown"
                 )
         try:
             base64_string = text.split(" ", 1)[1]
