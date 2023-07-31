@@ -62,9 +62,26 @@ async def get_req_count(channel_id):
     except Exception as e:
         print(f"Error getting request count by channel_id: {e}")
         return 0
-            
+
+async def get_missing_channel_ids(user_id, channel_ids):
+    try:
+        saved_channel_ids = [str(user_id) + str(channel_id) for channel_id in channel_ids]
+        docs = req_data.find({"_id": {"$in": saved_channel_ids}})
+        saved_ids = [doc["_id"][len(str(user_id)):] for doc in docs]
+        missing_ids = [channel_id for channel_id in channel_ids if channel_id not in saved_ids]
+        return missing_ids
+    except Exception as e:
+        print(f"Error finding missing channel_ids: {e}")
+        return channel_ids
+
+async def is_requested(message, channel_ids):
+    missing_channel_ids = await get_missing_channel_ids(message.from_user.id, channel_ids)
+    if not missing_channel_ids or message.from_user.id in ADMINS:
+        return True, missing_channel_ids
+    return False, missing_channel_ids
+    
 async def delete_all_req(channel_id):
     try:
-        await self.req_data.delete_many({"channel_id": int(channel_id)})
+        await req_data.delete_many({"channel_id": int(channel_id)})
     except Exception as e:
         print(f"Error deleting requests by channel_id: {e}")
