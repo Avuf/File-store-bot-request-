@@ -48,7 +48,7 @@ async def start_command(client: Client, message: Message):
                         [
                             InlineKeyboardButton(
                                 text='Try Again',
-                                url=f"https://t.me/{(await app.get_me()).username}?start={message.command[1]}"
+                                url=f"https://t.me/{(await client.get_me()).username}?start={message.command[1]}"
                             )
                         ]
                     )
@@ -60,6 +60,7 @@ async def start_command(client: Client, message: Message):
                     reply_markup=InlineKeyboardMarkup(inline_keyboard=btns),
                     parse_mode="markdown"
                 )
+                return 
         try:
             base64_string = text.split(" ", 1)[1]
         except:
