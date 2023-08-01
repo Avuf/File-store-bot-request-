@@ -40,16 +40,26 @@ class Bot(Client):
         await super().start()
         usr_bot_me = await self.get_me()
         self.uptime = datetime.now()
-
-        if FORCE_SUB_CHANNEL:
+       
+        if CHANNEL_ONE:
             try:
-                link = (await self.get_chat(FORCE_SUB_CHANNEL)).invite_link
+                link_a = (await client.create_chat_invite_link(chat_id=CHANNEL_ONE, creates_join_request=True)).invite_link 
+                self.link_one = link_a                                     
+            except Exception as a:
+                self.LOGGER(__name__).warningO
+                self.LOGGER(__name__).warning("Bot can't Export Invite link from Force Sub Channel!")
+                self.LOGGER(__name__).warning(f"Please Double check the CHANNEL_ONE value and Make sure Bot is Admin in channel with Invite Users via Link Permission, Current Force Sub Channel Value: {CHANNEL_ONE}")
+                self.LOGGER(__name__).info("\nBot Stopped. Join https://t.me/CodeXBotzSupport for support")
+                sys.exit()
+        if CHANNEL_TWO:
+            try:
+                link = (await self.get_chat(CHANNEL_ONE)).invite_link
                 if not link:
                     await self.export_chat_invite_link(FORCE_SUB_CHANNEL)
                     link = (await self.get_chat(FORCE_SUB_CHANNEL)).invite_link
-                self.invitelink = link
+                
             except Exception as a:
-                self.LOGGER(__name__).warning(a)
+                self.LOGGER(_link_e__).warning(a)
                 self.LOGGER(__name__).warning("Bot can't Export Invite link from Force Sub Channel!")
                 self.LOGGER(__name__).warning(f"Please Double check the FORCE_SUB_CHANNEL value and Make sure Bot is Admin in channel with Invite Users via Link Permission, Current Force Sub Channel Value: {FORCE_SUB_CHANNEL}")
                 self.LOGGER(__name__).info("\nBot Stopped. Join https://t.me/CodeXBotzSupport for support")
