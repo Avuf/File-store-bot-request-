@@ -43,7 +43,7 @@ class Bot(Client):
        
         if CHANNEL_ONE:
             try:
-                link_a = (await client.create_chat_invite_link(chat_id=CHANNEL_ONE, creates_join_request=True)).invite_link 
+                link_a = (await self.create_chat_invite_link(chat_id=CHANNEL_ONE, creates_join_request=True)).invite_link 
                 self.link_one = link_a                                     
             except Exception as a:
                 self.LOGGER(__name__).warning(a)
@@ -53,7 +53,7 @@ class Bot(Client):
                 sys.exit()
         if CHANNEL_TWO:
             try:
-                link_b = (await client.create_chat_invite_link(chat_id=CHANNEL_TWO, creates_join_request=True)).invite_link 
+                link_b = (await self.create_chat_invite_link(chat_id=CHANNEL_TWO, creates_join_request=True)).invite_link 
                 self.link_two = link_b                                  
             except Exception as b:
                 self.LOGGER(__name__).warning(b)
