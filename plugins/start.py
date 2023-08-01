@@ -11,9 +11,9 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, AUTH_CHANNEL
+from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, CHANNEL_ONE, CHANNEL_TWO
 from helper_func import subscribed, encode, decode, get_messages
-from database.database import add_user, del_user, full_userbase, present_user, is_subscribed
+from database.database import add_user, del_user, full_userbase, present_user, is_requested_one, is_requested_two 
 
 
 
@@ -28,39 +28,70 @@ async def start_command(client: Client, message: Message):
             pass
     text = message.text
     if len(text)>7:
-        if AUTH_CHANNEL:
-            missing_channels = [channel for channel in AUTH_CHANNEL if not await is_req_exist(id, channel)]
-
-            if missing_channels:
-                btns = []
-                for channel_id in missing_channels:
-                    try:
-                        invite_link = await client.create_chat_invite_link(chat_id=channel_id, creates_join_request=True)
-                    except Exception as e:
-                        print(f"Error creating invite link: {e}")
-                        return
-
-                    btns.append([
-                        InlineKeyboardButton(f"🤖 Join Channel", url=invite_link.link)
-                    ])
-                try:
-                    btns.append(
-                        [
-                            InlineKeyboardButton(
-                                text='Try Again',
-                                url=f"https://t.me/{(await client.get_me()).username}?start={message.command[1]}"
-                            )
-                        ]
+        if CHANNEL_ONE and not await is_requested_one(client, message):
+            if CHANNEL_TWO not await is_requested_two(client, message):
+                btn = [[
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
+                ], [ 
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2 🎗", url=client.link_two)
+            ]]
+            else:
+                btn = [[
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 🎗", url=client.link_one)
+                ]]
+            try:
+                btn.append(
+                      [
+                        InlineKeyboardButton(
+                             text = 'Try Again',
+                             url = f"https://t.me/{client.username}?start={message.command[1]}"
+                        )
+                    ]
                     )
                 except IndexError:
                     pass
-                await client.send_message(
+            await client.send_message(
                     chat_id=message.from_user.id,
-                    text="**Please Join the Following Channels to use this Bot!**",
-                    reply_markup=InlineKeyboardMarkup(inline_keyboard=btns),
-                    parse_mode="markdown"
-                )
-                return 
+                    text="**Please request Join the Following Channels to use this Bot!**",
+                    reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btns),
+                    parse_mode=types.ParseMode.MARKDOWN
+            )
+            return
+        if CHANNEL_TWO and not await is_requested_two(client, message):
+            if CHANNEL_ONE not await is_requested_one(client, message):
+                btn = [[
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
+                ], [ 
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2 🎗", url=client.link_two)
+            ]]
+            else:
+                btn = [[
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 🎗", url=client.link_two)
+                ]]
+            try:
+                btn.append(
+                      [
+                        InlineKeyboardButton(
+                             text = 'Try Again',
+                             url = f"https://t.me/{client.username}?start={message.command[1]}"
+                        )
+                    ]
+                    )
+                except IndexError:
+                    pass
+            await client.send_message(
+                chat_id=message.from_user.id,
+                text="**Please request Join the Following Channels to use this Bot!**",
+                reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btns),
+                parse_mode=types.ParseMode.MARKDOWN
+            )
+            return 
         try:
             base64_string = text.split(" ", 1)[1]
         except:
