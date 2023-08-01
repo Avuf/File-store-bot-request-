@@ -34,12 +34,14 @@ async def start_command(client: Client, message: Message):
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
             ]]
             try:
-                btn = [[
+                btn.append(
+                      [
                     InlineKeyboardButton(
                         "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_two)
-                ]]
-                except Exception:
-                    pass
+                      ]
+                )
+            except Exception:
+                past
             try:
                 btn.append(
                       [
@@ -64,10 +66,12 @@ async def start_command(client: Client, message: Message):
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_two)
             ]]
             try:
-                btn = [[
+                btn.append(
+                      [
                     InlineKeyboardButton(
                         "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_one)
-                ]]
+                      ]
+                )
                 except Exception:
                     pass
             try:
