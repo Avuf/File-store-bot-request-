@@ -28,20 +28,18 @@ async def start_command(client: Client, message: Message):
             pass
     text = message.text
     if len(text)>7:
-        if CHANNEL_ONE and not await is_requested_one(client, message):
-            if CHANNEL_TWO not await is_requested_two(client, message):
-                btn = [[
+        if client.link_one and not await is_requested_one(client, message):
+            btn = [[
                 InlineKeyboardButton(
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
-                ], [ 
-                InlineKeyboardButton(
-                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2 🎗", url=client.link_two)
             ]]
-            else:
+            try:
                 btn = [[
-                InlineKeyboardButton(
-                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 🎗", url=client.link_one)
+                    InlineKeyboardButton(
+                        "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_two)
                 ]]
+                except Exception:
+                    pass
             try:
                 btn.append(
                       [
@@ -51,47 +49,46 @@ async def start_command(client: Client, message: Message):
                         )
                     ]
                     )
-                except IndexError:
-                    pass
-            await client.send_message(
-                    chat_id=message.from_user.id,
-                    text="**Please request Join the Following Channels to use this Bot!**",
-                    reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btns),
-                    parse_mode=types.ParseMode.MARKDOWN
-            )
-            return
-        if CHANNEL_TWO and not await is_requested_two(client, message):
-            if CHANNEL_ONE not await is_requested_one(client, message):
-                btn = [[
-                InlineKeyboardButton(
-                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
-                ], [ 
-                InlineKeyboardButton(
-                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2 🎗", url=client.link_two)
-            ]]
-            else:
-                btn = [[
-                InlineKeyboardButton(
-                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 🎗", url=client.link_two)
-                ]]
-            try:
-                btn.append(
-                      [
-                        InlineKeyboardButton(
-                             text = 'Try Again',
-                             url = f"https://t.me/{client.username}?start={message.command[1]}"
-                        )
-                    ]
-                    )
-                except IndexError:
-                    pass
+            except (IndexError, ValueError):
+                pass
             await client.send_message(
                 chat_id=message.from_user.id,
                 text="**Please request Join the Following Channels to use this Bot!**",
-                reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btns),
+                reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btn),
                 parse_mode=types.ParseMode.MARKDOWN
             )
-            return 
+            return
+        if client.link_two and not await is_requested_two(client, message):
+            btn = [[
+                InlineKeyboardButton(
+                    "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_two)
+            ]]
+            try:
+                btn = [[
+                    InlineKeyboardButton(
+                        "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_one)
+                ]]
+                except Exception:
+                    pass
+            try:
+                btn.append(
+                      [
+                        InlineKeyboardButton(
+                             text = 'Try Again',
+                             url = f"https://t.me/{client.username}?start={message.command[1]}"
+                        )
+                    ]
+                    )
+            except (IndexError, ValueError):
+                pass
+            await client.send_message(
+                chat_id=message.from_user.id,
+                text="**Please request Join the Following Channels to use this Bot!**",
+                reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btn),
+                parse_mode=types.ParseMode.MARKDOWN
+            )
+            return
+            
         try:
             base64_string = text.split(" ", 1)[1]
         except:
