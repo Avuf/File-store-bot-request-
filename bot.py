@@ -40,7 +40,8 @@ class Bot(Client):
         await super().start()
         usr_bot_me = await self.get_me()
         self.uptime = datetime.now()
-       
+        self.link_one = None
+        self.link_two = None
         if CHANNEL_ONE:
             try:
                 link_a = (await self.create_chat_invite_link(chat_id=CHANNEL_ONE, creates_join_request=True)).invite_link 
