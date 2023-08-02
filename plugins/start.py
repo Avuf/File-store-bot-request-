@@ -28,7 +28,7 @@ async def start_command(client: Client, message: Message):
             pass
     text = message.text
     if len(text)>7:
-        if client.link_one and not await is_requested_one(client, message):
+        if client.link_one and not await is_requested_one(message):
             btn = [[
                 InlineKeyboardButton(
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
@@ -60,7 +60,7 @@ async def start_command(client: Client, message: Message):
                 parse_mode=types.ParseMode.MARKDOWN
             )
             return
-        if client.link_two and not await is_requested_two(client, message):
+        if client.link_two and not await is_requested_two(message):
             btn = [[
                 InlineKeyboardButton(
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_two)
