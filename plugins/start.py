@@ -34,12 +34,13 @@ async def start_command(client: Client, message: Message):
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_one)
             ]]
             try:
-                btn.append(
-                      [
-                    InlineKeyboardButton(
-                        "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_two)
-                      ]
-                )
+                if client.link_two and not await is_requested_two(message):
+                    btn.append(
+                          [
+                        InlineKeyboardButton(
+                            "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_two)
+                          ]
+                    )
             except Exception:
                 past
             try:
@@ -66,12 +67,13 @@ async def start_command(client: Client, message: Message):
                     "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 1 🎗", url=client.link_two)
             ]]
             try:
-                btn.append(
-                      [
-                    InlineKeyboardButton(
-                        "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_one)
-                      ]
-                )
+                if client.link_one and not await is_requested_one(message):
+                    btn.append(
+                          [
+                        InlineKeyboardButton(
+                            "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_one)
+                          ]
+                    )
             except Exception:
                 pass
             try:
