@@ -41,8 +41,8 @@ async def start_command(client: Client, message):
                             "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_two)
                           ]
                     )
-            except Exception:
-                past
+            except Exception as e:
+                print(e)
             try:
                 btn.append(
                       [
@@ -74,8 +74,8 @@ async def start_command(client: Client, message):
                             "🎗 Rᴇǫᴜᴇꜱᴛ Tᴏ Jᴏɪɴ Cʜᴀɴɴᴇʟ 2", url=client.link_one)
                           ]
                     )
-            except Exception:
-                pass
+            except Exception as e:
+                print(e)
             try:
                 btn.append(
                       [
