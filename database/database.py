@@ -73,3 +73,10 @@ async def get_req_one(user_id):
 
 async def get_req_two(user_id):
     return req_two.find_one({"user_id": int(user_id)})
+
+async def delete_all_one(self):
+    req_one.delete_many({})
+
+async def delete_all_two(self):
+    req_two.delete_many({})
+
