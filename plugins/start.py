@@ -13,7 +13,7 @@ from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 from bot import Bot
 from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, CHANNEL_ONE, CHANNEL_TWO
 from helper_func import encode, decode, get_messages
-from database.database import add_user, del_user, full_userbase, present_user, is_requested_one, is_requested_two 
+from database.database import add_user, del_user, full_userbase, present_user, is_requested_one, is_requested_two, delete_all_one, delete_all_two
 
 
 
@@ -235,3 +235,17 @@ Unsuccessful: <code>{unsuccessful}</code></b>"""
         msg = await message.reply(REPLY_ERROR)
         await asyncio.sleep(8)
         await msg.delete()
+
+
+@Bot.on_message(filters.command('purge_one') & filters.private & filters.user(ADMINS))
+async def purge_req_one(bot, message):
+    r = await message.reply("`processing...`")
+    await delete_all_one()
+    await r.edit("**Req db Cleared**" )
+
+
+@Bot.on_message(filters.command('purge_two') & filters.private & filters.user(ADMINS))
+async def purge_req_two(bot, message):
+    r = await message.reply("`processing...`")
+    await delete_all_two()
+    await r.edit("**Req db Cleared**" )
