@@ -69,7 +69,7 @@ async def add_req_two(user_id):
         pass
 
 async def get_req_one(user_id):
-    return await req_one.find_one({"user_id": int(user_id)})
+    return req_one.find_one({"user_id": int(user_id)})
 
 async def get_req_two(user_id):
-    return await req_two.find_one({"user_id": int(user_id)})
+    return req_two.find_one({"user_id": int(user_id)})
