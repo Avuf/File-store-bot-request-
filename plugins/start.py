@@ -58,7 +58,7 @@ async def start_command(client: Client, message):
                 chat_id=message.from_user.id,
                 text="**Please request Join the Following Channels to use this Bot!**",
                 reply_markup=InlineKeyboardMarkup(inline_keyboard=btn),
-                parse_mode=types.ParseMode.MARKDOWN
+                parse_mode=ParseMode.MARKDOWN
             )
             return
         if client.link_two is not None and not await is_requested_two(message):
@@ -91,7 +91,7 @@ async def start_command(client: Client, message):
                 chat_id=message.from_user.id,
                 text="**Please request Join the Following Channels to use this Bot!**",
                 reply_markup=InlineKeyboardMarkup(inline_keyboard=btn),
-                parse_mode=types.ParseMode.MARKDOWN
+                parse_mode=ParseMode.MARKDOWN
             )
             return
             
