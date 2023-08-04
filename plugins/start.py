@@ -57,7 +57,7 @@ async def start_command(client: Client, message):
             await client.send_message(
                 chat_id=message.from_user.id,
                 text="**Please request Join the Following Channels to use this Bot!**",
-                reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btn),
+                reply_markup=InlineKeyboardMarkup(inline_keyboard=btn),
                 parse_mode=types.ParseMode.MARKDOWN
             )
             return
@@ -90,7 +90,7 @@ async def start_command(client: Client, message):
             await client.send_message(
                 chat_id=message.from_user.id,
                 text="**Please request Join the Following Channels to use this Bot!**",
-                reply_markup=types.InlineKeyboardMarkup(inline_keyboard=btn),
+                reply_markup=InlineKeyboardMarkup(inline_keyboard=btn),
                 parse_mode=types.ParseMode.MARKDOWN
             )
             return
