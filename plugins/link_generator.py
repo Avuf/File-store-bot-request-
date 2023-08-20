@@ -19,8 +19,8 @@ async def batch(client, message: Message):
     except:
         return
     f_msg_id = await get_message_id(client, first_message)
-        if not f_msg_id:
-            return await first_message.reply("❌ Error\n\nthis Forwarded Post is not from my DB Channel or this Link is taken from DB Channel", quote=True)
+    if not f_msg_id:
+        return await first_message.reply("❌ Error\n\nthis Forwarded Post is not from my DB Channel or this Link is taken from DB Channel", quote=True)
     while True:
         try:
             second_message = await client.ask(
