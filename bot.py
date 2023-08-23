@@ -84,7 +84,7 @@ class Bot(Client):
 ░╚════╝░░╚════╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═════╝░░╚════╝░░░░╚═╝░░░╚══════╝
                                           """)
         self.username = usr_bot_me.username
-        #web-response
+        # web-response
         app = web.AppRunner(await web_server())
         await app.setup()
         bind_address = "0.0.0.0"
